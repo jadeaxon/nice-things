@@ -1,3 +1,5 @@
+src/test_nt_string
+
 # Object files
 *.o
 *.ko

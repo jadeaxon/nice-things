@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 #include "nt_string.h"
 
@@ -35,4 +36,20 @@ char* nt_chomp(char* s) {
 	return s0;
 } // nt_chomp()
 
+
+// Reverses the given null-terminated string.  Mutates the given string.
+// There's no strrev() in Linux string.h even though some docs mention it online.
+char* nt_strrev(char* str) {
+    if (str) {
+        char* end = str + strlen(str) - 1;
+
+        // Walk inwards from both ends of the string, 
+        // swapping until we get to the middle
+        while (str < end) {
+            NT_XOR_SWAP(*str, *end);
+            str++;
+            end--;
+        }
+    }
+} // nt_strrev()
 
