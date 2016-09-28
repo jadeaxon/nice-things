@@ -1,5 +1,6 @@
 #pragma once
 
-void nt_foo(void);
+char* nt_chop(char* s);
 char* nt_chomp(char* s);
+
 
