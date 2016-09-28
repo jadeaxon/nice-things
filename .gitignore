@@ -1,4 +1,5 @@
 src/test_nt_string
+src/test_nt_crypt
 
 # Object files
 *.o
