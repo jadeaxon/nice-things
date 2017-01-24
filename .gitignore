@@ -1,6 +1,7 @@
 src/test_nt_string
 src/test_nt_crypt
 src/test_nt_signal
+src/test_nt_error
 
 # Object files
 *.o
