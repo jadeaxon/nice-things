@@ -32,6 +32,7 @@ if [ ! -d $dlibpath ]; then
 fi
 # Deploy the lib.
 cp $b/$libfile $dlibpath
+cp $b/$libfile /usr/local/lib/
 rm *.o
 
 # The rpath mechanism allows program to find lib in non-standard location without
