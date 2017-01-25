@@ -30,6 +30,7 @@ if [ ! -d $dlibpath ]; then
 	echo "$S: ERROR: $dlibpath is not a directory!" 1>&2
 	exit 1
 fi
+# Deploy the lib.
 cp $b/$libfile $dlibpath
 rm *.o
 
@@ -39,10 +40,13 @@ rpath="-Wl,-rpath,$dlibpath"
 
 # Build the test scripts.
 # TO DO: For each loop.
-gcc test_nt_string.c $rpath -L. -l$lib -I. -o $b/test_nt_string
-gcc test_nt_crypt.c $rpath -L. -l$lib -I. -o $b/test_nt_crypt
-gcc test_nt_error.c $rpath -L. -l$lib -I. -o $b/test_nt_error
-gcc test_nt_signal.c $rpath -L. -l$lib -I. -o $b/test_nt_signal
+gcc test_nt_string.c $rpath -L$b -l$lib -I. -o $b/test_nt_string
+gcc test_nt_crypt.c $rpath -L$b -l$lib -I. -o $b/test_nt_crypt
+gcc test_nt_error.c $rpath -L$b -l$lib -I. -o $b/test_nt_error
+gcc test_nt_signal.c $rpath -L$b -l$lib -I. -o $b/test_nt_signal
+
+# Deploy the headers.
+cp *.h /usr/local/include/
 
 ls -la $b
 cd - >& /dev/null
