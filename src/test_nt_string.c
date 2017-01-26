@@ -78,6 +78,11 @@ void test__nt_keep_chars(void) {
 	char e7[] = "1024";
 	nt_keep_chars(s7, "0123456789");
 	(strcmp(s7, e7) == 0) ? puts("PASS") : puts ("FAIL");
+	
+	char s8[] = "2017: A String Odyssey";
+	char e8[] = "2017";
+	nt_keep_chars(s8, "9876543210");
+	(strcmp(s8, e8) == 0) ? puts("PASS") : puts ("FAIL");
 }
 
 
