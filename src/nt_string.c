@@ -1,7 +1,7 @@
+#include "nt_string.h"
+
 #include <stdio.h>
 #include <string.h>
-
-#include "nt_string.h"
 
 
 // Removes the last character of a string.  Mutates the given string.
@@ -52,4 +52,36 @@ char* nt_strrev(char* str) {
         }
     }
 } // nt_strrev()
+
+
+// Keeps only chars in s that exist in keepers.  Deletes all other characters.
+// Mutates the given string and returns it.
+char* nt_keep_chars(char* s, char* keepers) {
+	printf("+nt_keep_chars(%s, %s)\n", s, keepers);
+	// char* temp = strdup(s);
+	// char* i = temp;
+	// char* s0 = s;
+	char* i = s;
+	char* s0 = s;
+	while (*s != '\0') {
+		char c = *s;
+		char* k = keepers;
+		printf("Checking %c\n", c);
+		// int keep = 0;
+		while (*k++ != '\0') {
+			printf("  %c == %c?\n", c, *k);
+			if (c == *k) {
+				*i = c;
+				i++;
+				// keep = 1;
+				break;
+			}
+		} // next keeper char
+		s++;
+	} // next string char
+	*i = '\0';
+	printf("-nt_keep_chars(%s, %s)\n", s0, keepers);
+	return s0;
+} // nt_keep_chars()
+
 

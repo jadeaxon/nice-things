@@ -59,6 +59,12 @@ int main(void) {
 		puts("FAIL");
 	}
 
+	puts("nt_keep_chars()");
+	char s6[] = "Keep only the vowels";
+	char e6[] = "eeoeoe";
+	nt_keep_chars(s6, "aeiou");
+	(strcmp(s6, e6) == 0) ? puts("PASS") : puts ("FAIL");
+	
 } // main()
 
 

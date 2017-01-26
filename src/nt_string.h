@@ -8,5 +8,5 @@
 char* nt_chop(char* s);
 char* nt_chomp(char* s);
 char* nt_strrev(char* s);
-
+char* nt_keep_chars(char* s, char* keepers);
 
