@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include <string.h>
 
+void test__nt_keep_chars(void);
+
+
 // Tests the functions declared in nt_string.h.
 int main(void) {
 	puts("nt_chomp()");
@@ -59,12 +62,22 @@ int main(void) {
 		puts("FAIL");
 	}
 
+	test__nt_keep_chars();
+
+} // main()
+
+
+void test__nt_keep_chars(void) {
 	puts("nt_keep_chars()");
 	char s6[] = "Keep only the vowels";
 	char e6[] = "eeoeoe";
 	nt_keep_chars(s6, "aeiou");
 	(strcmp(s6, e6) == 0) ? puts("PASS") : puts ("FAIL");
-	
-} // main()
+
+	char s7[] = "Content Size: 1024";
+	char e7[] = "1024";
+	nt_keep_chars(s7, "0123456789");
+	(strcmp(s7, e7) == 0) ? puts("PASS") : puts ("FAIL");
+}
 
 
