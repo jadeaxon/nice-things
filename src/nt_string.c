@@ -82,3 +82,14 @@ char* nt_keep_chars(char* s, char* keepers) {
 } // nt_keep_chars()
 
 
+// Checks to see if given string starts with query string.
+bool nt_starts_with(char* s, char* query) {
+	while (*query != '\0') {
+		if (*query != *s) return false;
+		query++;
+		s++;
+	} // next char
+	return true;
+} // nt_starts_with()
+
+

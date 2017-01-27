@@ -4,6 +4,7 @@
 #include <string.h>
 
 void test__nt_keep_chars(void);
+void test__nt_starts_with(void);
 
 
 // Tests the functions declared in nt_string.h.
@@ -37,6 +38,7 @@ int main(void) {
 	(strcmp(s5, e5) == 0) ? puts("PASS") : puts ("FAIL");
 
 	test__nt_keep_chars();
+	test__nt_starts_with();
 
 } // main()
 
@@ -59,4 +61,17 @@ void test__nt_keep_chars(void) {
 	(strcmp(s8, e8) == 0) ? puts("PASS") : puts ("FAIL");
 }
 
+
+void test__nt_starts_with(void) {
+	puts("nt_starts_with()");
+	char s0[] = "This starts with This";
+	bool e0 = true;
+	bool r0 = nt_starts_with(s0, "This");
+	(e0 == r0) ? puts("PASS") : puts("FAIL");
+
+	char s1[] = "But This not starts with This";
+	bool e1 = false;
+	bool r1 = nt_starts_with(s1, "This");
+	(e1 == r1) ? puts("PASS") : puts("FAIL");
+}
 
