@@ -3,6 +3,8 @@ src/test_nt_crypt
 src/test_nt_signal
 src/test_nt_error
 
+*.db
+
 # Object files
 *.o
 *.ko
