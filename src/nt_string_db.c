@@ -28,7 +28,7 @@ void nt_string_db_error(int error, char* msg) {
 // Constructor
 
 // Creates a string database.  Returns a pointer to it.
-StringDatabase* nt_create_string_db(char* path) {
+StringDatabase* nt_create_string_db(void) {
 	DB* dbp = NULL; // Berkeley DB handle
     int error = 0; // Function error.
 
@@ -43,6 +43,7 @@ StringDatabase* nt_create_string_db(char* path) {
 		exit(1);
 	}
 	sdb->dbp = dbp;
+	sdb->MAX_KEY_SIZE = 80;
 	sdb->MAX_STRING_SIZE = 1024;
 
 	// Register instance methods.
@@ -86,12 +87,12 @@ void nt_string_db_put(StringDatabase* this, char* key, char* value) {
     DBT db_key, db_value;
 
 	if (strlen(key) > this->MAX_KEY_SIZE) {
-		fprintf(stderr, "ERROR: Key is too large.\n");
+		fprintf(stderr, "ERROR: put: Key is too large:\n%s\n", key);
 		exit(1);
 	}
 
 	if (strlen(value) > this->MAX_STRING_SIZE) {
-		fprintf(stderr, "ERROR: String is too large.\n");
+		fprintf(stderr, "ERROR: put: String is too large.\n");
 		exit(1);
 	}
 
@@ -114,6 +115,11 @@ void nt_string_db_put(StringDatabase* this, char* key, char* value) {
 // Gets a string from the database given its key.
 // PRE: The key is not too large.
 char* nt_string_db_get(StringDatabase* this, char* key) {
+	if (strlen(key) > this->MAX_KEY_SIZE) {
+		fprintf(stderr, "ERROR: get: Key is too large:\n%s\n", key);
+		exit(1);
+	}
+
 	/* Zero out the DBTs before using them. */
     DBT db_key, db_value;
     memset(&db_key, 0, sizeof(DBT));

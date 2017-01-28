@@ -12,7 +12,7 @@ struct string_db {
 	char* (*get)(StringDatabase*, char* key);
 };
 
-StringDatabase* nt_create_string_db(char* path);
+StringDatabase* nt_create_string_db(void);
 void nt_string_db_error(int error, char* msg);
 
 void nt_string_db_open(StringDatabase* this, char* path);
