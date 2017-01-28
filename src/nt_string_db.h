@@ -5,6 +5,8 @@
 typedef struct string_db StringDatabase;
 struct string_db {
 	DB* dbp; // Berkeley DB pointer	
+	int MAX_STRING_SIZE; // Max string size: 1024 default.	
+	int MAX_KEY_SIZE; // Max key size: 80 default.
 	void (*open)(StringDatabase*, char* path);
 	void (*put)(StringDatabase*, char* key, char* value);
 	char* (*get)(StringDatabase*, char* key);

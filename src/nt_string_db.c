@@ -1,8 +1,11 @@
 #include "nt_string_db.h"
 
+// C
 #include <stdio.h> // printf()
 #include <stdlib.h> // exit()
+#include <string.h> // memset()
 
+// Berkeley DB
 #include <db.h> // sud!b nec
 
 // dbe => nt_string_db_error in this file.
@@ -40,6 +43,7 @@ StringDatabase* nt_create_string_db(char* path) {
 		exit(1);
 	}
 	sdb->dbp = dbp;
+	sdb->MAX_STRING_SIZE = 1024;
 
 	// Register instance methods.
 	sdb->open = nt_string_database_open;
@@ -73,9 +77,38 @@ void nt_string_database_open(StringDatabase* this, char* path) {
 } // nt_string_database_open(...)
 
 
-void nt_string_database_put(StringDatabase* sdb, char* key, char* value) {
-	puts("Not implemented!");
-}
+// Puts a string into the database.
+// PRE: Key and string value are not too large.
+// PRE: String database is open.
+void nt_string_database_put(StringDatabase* this, char* key, char* value) {
+	// BDB uses a DBT type to rep both.  It is a void* and a length.
+    // So it is a serialize blob of some amount of any kind of data.
+    DBT db_key, db_value;
+
+	if (strlen(key) > this->MAX_KEY_SIZE) {
+		fprintf(stderr, "ERROR: Key is too large.\n");
+		exit(1);
+	}
+
+	if (strlen(value) > this->MAX_STRING_SIZE) {
+		fprintf(stderr, "ERROR: String is too large.\n");
+		exit(1);
+	}
+
+    /* Zero out the DBTs before using them. */
+    memset(&db_key, 0, sizeof(DBT));
+    memset(&db_value, 0, sizeof(DBT));
+    db_key.data = key;
+    db_key.size = this->MAX_KEY_SIZE;
+    db_value.data = value;
+    db_value.size = this->MAX_STRING_SIZE;
+
+    // Okay, so we have a key and value DBT.  How do we put that in the database?
+    // 2nd arg is transaction this access is part of.  We're not using transactions.
+    // Last argument is flags affecting execution of put().
+    int error = this->dbp->put(this->dbp, NULL, &db_key, &db_value, 0);
+    dbe(error, "Failed to put record into database");
+} // nt_string_database_put(...)
 
 
 char* nt_string_database_get(StringDatabase* sdb, char* key) {
