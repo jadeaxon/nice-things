@@ -1,4 +1,13 @@
 #!/usr/bin/env bash
 
-./build.sh
+set -o pipefail
+
+./build.sh |& tee build.out
+if (( $? != 0 )); then
+	cd src	
+	vim -q ../build.out
+else
+	rm -f build.out
+fi
+
 

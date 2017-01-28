@@ -25,7 +25,7 @@ mkdir -p $b
 # Deployment path for the library.
 dlibpath=$HOME/lib
 gcc -c $fpic nt_*.c
-gcc -shared -o $b/$libfile nt_*.o
+gcc -shared -o $b/$libfile nt_*.o -ldb
 if [ ! -d $dlibpath ]; then
 	echo "$S: ERROR: $dlibpath is not a directory!" 1>&2
 	exit 1
