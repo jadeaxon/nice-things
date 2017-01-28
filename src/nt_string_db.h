@@ -15,8 +15,8 @@ struct string_db {
 StringDatabase* nt_create_string_db(char* path);
 void nt_string_db_error(int error, char* msg);
 
-void nt_string_database_open(StringDatabase* this, char* path);
-void nt_string_database_put(StringDatabase* this, char* key, char* value);
-char* nt_string_database_get(StringDatabase* this, char* key);
+void nt_string_db_open(StringDatabase* this, char* path);
+void nt_string_db_put(StringDatabase* this, char* key, char* value);
+char* nt_string_db_get(StringDatabase* this, char* key);
 
 

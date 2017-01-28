@@ -46,9 +46,9 @@ StringDatabase* nt_create_string_db(char* path) {
 	sdb->MAX_STRING_SIZE = 1024;
 
 	// Register instance methods.
-	sdb->open = nt_string_database_open;
-	sdb->put = nt_string_database_put;
-	sdb->get = nt_string_database_get;
+	sdb->open = nt_string_db_open;
+	sdb->put = nt_string_db_put;
+	sdb->get = nt_string_db_get;
 
 } // nt_create_string_db(char*)
 
@@ -57,7 +57,7 @@ StringDatabase* nt_create_string_db(char* path) {
 // Instance Methods
 
 // Opens a StringDatabase to file at given path.  Creates database file if DNE. 
-void nt_string_database_open(StringDatabase* this, char* path) {
+void nt_string_db_open(StringDatabase* this, char* path) {
 	// Create database file on open if it does not already exist.
     u_int32_t flags = DB_CREATE; // Database open flags.
 	int error = 0; // Function error.
@@ -74,13 +74,13 @@ void nt_string_database_open(StringDatabase* this, char* path) {
     );
     dbe(error, "Failed to open string database");
 	
-} // nt_string_database_open(...)
+} // nt_string_db_open(...)
 
 
 // Puts a string into the database.
 // PRE: Key and string value are not too large.
 // PRE: String database is open.
-void nt_string_database_put(StringDatabase* this, char* key, char* value) {
+void nt_string_db_put(StringDatabase* this, char* key, char* value) {
 	// BDB uses a DBT type to rep both.  It is a void* and a length.
     // So it is a serialize blob of some amount of any kind of data.
     DBT db_key, db_value;
@@ -108,12 +108,12 @@ void nt_string_database_put(StringDatabase* this, char* key, char* value) {
     // Last argument is flags affecting execution of put().
     int error = this->dbp->put(this->dbp, NULL, &db_key, &db_value, 0);
     dbe(error, "Failed to put record into database");
-} // nt_string_database_put(...)
+} // nt_string_db_put(...)
 
 
 // Gets a string from the database given its key.
 // PRE: The key is not too large.
-char* nt_string_database_get(StringDatabase* this, char* key) {
+char* nt_string_db_get(StringDatabase* this, char* key) {
 	/* Zero out the DBTs before using them. */
     DBT db_key, db_value;
     memset(&db_key, 0, sizeof(DBT));
@@ -124,6 +124,6 @@ char* nt_string_database_get(StringDatabase* this, char* key) {
     db_value.flags = DB_DBT_USERMEM; // Use our own memory to ward off alignment problems.
     int error = this->dbp->get(this->dbp, NULL, &db_key, &db_value, 0);
     dbe(error, "Failed to get record from database");
-} // nt_string_database_put();
+} // nt_string_db_put();
 
 
