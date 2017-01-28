@@ -111,8 +111,19 @@ void nt_string_database_put(StringDatabase* this, char* key, char* value) {
 } // nt_string_database_put(...)
 
 
-char* nt_string_database_get(StringDatabase* sdb, char* key) {
-	puts("Not implemented!");
-}
+// Gets a string from the database given its key.
+// PRE: The key is not too large.
+char* nt_string_database_get(StringDatabase* this, char* key) {
+	/* Zero out the DBTs before using them. */
+    DBT db_key, db_value;
+    memset(&db_key, 0, sizeof(DBT));
+    memset(&db_value, 0, sizeof(DBT));
+    db_key.data = key;
+    db_key.size = this->MAX_KEY_SIZE;
+    db_value.ulen = this->MAX_STRING_SIZE;
+    db_value.flags = DB_DBT_USERMEM; // Use our own memory to ward off alignment problems.
+    int error = this->dbp->get(this->dbp, NULL, &db_key, &db_value, 0);
+    dbe(error, "Failed to get record from database");
+} // nt_string_database_put();
 
 
