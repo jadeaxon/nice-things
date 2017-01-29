@@ -120,16 +120,24 @@ char* nt_string_db_get(StringDatabase* this, char* key) {
 		exit(1);
 	}
 
-	/* Zero out the DBTs before using them. */
+	// Zero out the DBTs before using them.
     DBT db_key, db_value;
     memset(&db_key, 0, sizeof(DBT));
     memset(&db_value, 0, sizeof(DBT));
     db_key.data = key;
     db_key.size = this->MAX_KEY_SIZE;
-    db_value.ulen = this->MAX_STRING_SIZE;
-    db_value.flags = DB_DBT_USERMEM; // Use our own memory to ward off alignment problems.
+   
+	// Even though the getting started guide seems to suggest this, it causes retrieval to fail.
+	// db_value.ulen = this->MAX_STRING_SIZE;
+    // db_value.flags = DB_DBT_USERMEM; // Use our own memory to ward off alignment problems.
+
     int error = this->dbp->get(this->dbp, NULL, &db_key, &db_value, 0);
     dbe(error, "Failed to get record from database");
+
+	// Now, this string that's been returned, where the hell is it then?  If we return a
+	// pointer to it, will it still exist when we access it from the caller?
+	return (char*) db_value.data;
+
 } // nt_string_db_put();
 
 

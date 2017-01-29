@@ -20,6 +20,7 @@ int main(void) {
 	v = sdb->get(sdb, k);
 	(strcmp(v, e) == 0) ? puts("PASS") : puts("FAIL");
 
+	return 0;
 } // main()
 
 
