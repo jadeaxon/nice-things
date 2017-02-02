@@ -22,6 +22,17 @@ int main(void) {
 	r = nt_factorial(v);
 	(r == e) ? puts("PASS") : puts("FAIL");
 
+	/* 21 clocks the long range on my desktop.
+	r = nt_factorial(20);
+	printf("%ld\n", r);
+
+	r = nt_factorial(21);
+	printf("%ld\n", r);
+	*/
+
+	// r = nt_factorial(-1); // Errors out and exits.
+	// r = nt_factorial(21); // Errors out and exits.
+
 	return 0;
 }
 
