@@ -46,6 +46,7 @@ gcc test_nt_crypt.c $rpath -L$b -l$lib -I. -o $b/test_nt_crypt
 gcc test_nt_error.c $rpath -L$b -l$lib -I. -o $b/test_nt_error
 gcc test_nt_signal.c $rpath -L$b -l$lib -I. -o $b/test_nt_signal
 gcc test_nt_string_db.c $rpath -L$b -l$lib -I. -o $b/test_nt_string_db
+gcc test_nt_math.c $rpath -L$b -l$lib -I. -o $b/test_nt_math
 
 
 # Deploy the headers.
